@@ -1,102 +1,124 @@
-import { useForm, Controller } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
-import { states } from "../../data/state";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"
+import Box from '@mui/material/Box';
+import { DataGrid, GridColDef,  GridLogicOperator,  GridToolbar  } from '@mui/x-data-grid';
 
-export function CurrentEmployees() {
-    const {handleSubmit, register, control, formState : {errors} } = useForm()
-    function onSubmit(data) {
-        console.log(data)
-    }
+import styles from "./CurrentEmployees.module.css"
+import { useSelector } from "react-redux";
+
+export function CurrentEmployees(){
+    const employees = useSelector((state) => state.employees)
+    console.log(employees)
+    const columns: GridColDef[] = [
+        {
+            field: 'firstName',
+            headerName: 'First name',
+            flex: 1,
+            //   width: 150,
+            // editable: true,
+        },
+        {
+            field: 'lastName',
+            headerName: 'Last name',
+            flex: 1,
+            //   width: 150,
+            // editable: true,
+        },
+        {
+            field: 'startDate',
+            headerName: 'Start Date',
+            flex: 1,
+            //   width: 150,
+            // editable: true,
+        },
+        {
+            field: 'department',
+            headerName: 'Department',
+            flex: 1,
+            //   width: 150,
+            // editable: true,
+        },
+        {
+            field: 'dateOfBirth',
+            headerName: 'Date of Birth',
+            flex: 1,
+            //   width: 150,
+            // editable: true,
+        },
+        {
+            field: 'street',
+            headerName: 'Street',
+            flex: 1,
+            //   width: 150,
+            // editable: true,
+        },
+        {
+            field: 'city',
+            headerName: 'City',
+            flex: 1,
+            //   width: 150,
+            // editable: true,
+        },
+        {
+            field: 'state',
+            headerName: 'State',
+            flex: 1,
+            //   width: 150,
+            // editable: true,
+        },
+        {
+            field: 'zipCode',
+            headerName: 'Zip Code',
+            flex: 1,
+            //   width: 150,
+            // editable: true,
+        },
+      ];
+      
     return(
-        <main>
-            <div className="title">
-                <h1>HRnet</h1>
-            </div>
-            <div className="container">
-                <Link to="/Home">View Current Employees</Link>
-                <h2>Create Employee</h2>
-                <form onSubmit={handleSubmit(onSubmit)} id="create-employee">
-                    <label htmlFor="first-name">First Name</label>
-                    <input type="text" id="first-name" { ...register("firstName", { required : true })}/>
-                    {errors.firstName && <p>First name is required</p>}
-
-                    <label htmlFor="last-name">Last Name</label>
-                    <input type="text" id="last-name" { ...register("lastName", { required : true })}/>
-                    {errors.lastName && <p>Last name is required</p>}
-
-                    <label htmlFor="date-of-birth">Date of Birth</label>
-                    <Controller
-                        control={control}
-                        name='dateOfBirth'
-                        render={({ field }) => (
-                            <DatePicker
-                                id="date-of-birth"
-                                placeholderText='Select date'
-                                onChange={(date: Date) => field.onChange(date)}
-                                selected={field.value}
-                            />
-                        )}
+        <>
+            <nav className={styles['nav']}>
+                <h1>Current Employees</h1>
+                <Link to="/Home" >Home</Link>
+            </nav>
+            <main className={styles['main']}>
+                <Box sx={{ height: 400, width: '100%' }}>
+                    <DataGrid
+                        autoHeight
+                        rows={employees.employees}
+                        columns={columns}
+                        disableColumnFilter
+                        disableColumnSelector
+                        disableDensitySelector
+                        disableColumnMenu
+                        slots={
+                            { toolbar: GridToolbar }
+                        }
+                        slotProps={{
+                            toolbar: {
+                                showQuickFilter: true,
+                            },
+                        }}
+                        initialState={{
+                            filter: {
+                                filterModel: {
+                                items: [],
+                                quickFilterLogicOperator: GridLogicOperator.Or,
+                                },
+                            },
+                            pagination: { paginationModel: { pageSize: 10 } },
+                            }}
+                        
+                        
+                        pageSizeOptions={[10, 25, 50, 100]}
+                        checkboxSelection
+                        disableRowSelectionOnClick
                     />
-                    {errors.dateOfBirth && <p>Select a date</p>}
-
-                    <label htmlFor="start-date">Start Date</label>
-                    <Controller
-                        control={control}
-                        name='startDate'
-                        render={({ field }) => (
-                            <DatePicker
-                                id="start-date"
-                                placeholderText='Select date'
-                                onChange={(date: Date) => field.onChange(date)}
-                                selected={field.value}
-                            />
-                        )}
-                    />
-                    {errors.startDate && <p>Select a date</p>}
-
-                    <div className="address">
-                        <legend>Address</legend>
-
-                        <label htmlFor="street">Street</label>
-                        <input id="street" type="text" { ...register("street", { required : true })}/>
-                        {errors.street && <p>Street is required</p>}
-
-                        <label htmlFor="city">City</label>
-                        <input id="city" type="text" { ...register("city", { required : true })}/>
-                        {errors.city && <p>City is required</p>}
-
-                        <label htmlFor="state">State</label>
-                        <select id="state" { ...register("state", { required : true })}>
-                            {states.map((state)=> {
-                                return <option key={state.abbreviation}>{ state.name }</option>
-                            })}
-                        </select>
-                        {errors.state && <p>Select a State</p>}
-
-                        <label htmlFor="zip-code">Zip Code</label>
-                        <input id="zip-code" type="number" { ...register("zipCode", { required : true })}/>
-                        {errors.zipCode && <p>Zip code is required</p>}
-                    </div>
-
-                    <label htmlFor="department">Department</label>
-                    <select id="department" { ...register("department", { required : true })}>
-                        <option>Sales</option>
-                        <option>Marketing</option>
-                        <option>Engineering</option>
-                        <option>Human Resources</option>
-                        <option>Legal</option>
-                    </select>
-                    {errors.department && <p>Select a department</p>}
-
-                    <button type="submit">Save</button>
-                </form>
-
-                
-            </div>
-        </main>
+                </Box>
+            </main>
+        </>
+        
         
     )
+
 }

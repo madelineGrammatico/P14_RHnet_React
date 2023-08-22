@@ -1,0 +1,25 @@
+.modale{
+    position: absolute;
+    width: 25rem;
+    background-color: hotpink;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:4rem;
+    border-radius: 3px;
+}
+.close {
+    position: absolute;
+    right: -1rem;
+    top: -1rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: #000;
+    color: #FFF;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }

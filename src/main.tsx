@@ -8,6 +8,10 @@ import {
 import { Provider } from 'react-redux'
 import { store } from './app/store'
 
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+
 import { Home } from './page/Home/Home'
 import { RootLayout } from './page/RootLayout/RootLayout'
 import { CurrentEmployees } from './page/CurrentEmployees/CurrentEmployees'
@@ -34,6 +38,8 @@ const router = createBrowserRouter([
 ])
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
-    <RouterProvider router={router}/>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <RouterProvider router={router}/>
+    </LocalizationProvider>
  </Provider>
 )
