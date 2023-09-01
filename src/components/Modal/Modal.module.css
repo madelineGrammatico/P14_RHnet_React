@@ -1,14 +1,19 @@
-.modale{
+.modal {
     position: absolute;
     width: 25rem;
-    background-color: hotpink;
+    background-color: #FFF;
     z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     padding:4rem;
-    border-radius: 3px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
+.hidden {
+    display: none;
+}
+
 .close {
     position: absolute;
     right: -1rem;

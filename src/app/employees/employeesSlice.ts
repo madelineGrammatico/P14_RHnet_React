@@ -3,8 +3,8 @@ import { createSlice, Draft, PayloadAction } from "@reduxjs/toolkit"
 export type Employee = {
     firstName: string,
     lastName: string,
-    dateOfBirth: any,
-    startDate: any,
+    dateOfBirth: string,
+    startDate: string,
     street: string,
     city: string,
     state: string,

@@ -1,6 +1,4 @@
 import { useForm, Controller } from "react-hook-form"
-import { Link } from "react-router-dom"
-
 import { states } from "../../data/state";
 
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -11,78 +9,89 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 
-import  styles  from "./Home.module.css"
-// import {SelectUi} from "../../components/SelectUi/SelectUi";
+import styles from "./Home.module.css"
 import { Employee, addEmployee } from "../../app/employees/employeesSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { Modal } from "../../components/Modal/Modal";
+import { Typography } from "@mui/material";
+import Link from '@mui/material/Link'
+
+import { useSelector } from "react-redux";
 
 export function Home() {
-    const {handleSubmit, register,control, formState : {errors} } = useForm()
+    const { handleSubmit, register,control, formState : {errors} } = useForm()
     const dispatch = useDispatch()
-    const [showModal, setshowmodal] = useState(true)
-
+    const [ showModal, setShowModal ] = useState(false)
+    const employees = useSelector((state) => state.employees)
+    console.log(employees)
     function onSubmit(data: Employee) {
-        console.log(data)
+        
         const dataFormated = data
         dataFormated.dateOfBirth = dataFormated.dateOfBirth.toLocaleDateString()
         dataFormated.startDate = dataFormated.startDate.toLocaleDateString()
-        console.log(dataFormated)
+        console.log("hey", dataFormated)
         dispatch(addEmployee(dataFormated))
-        setshowmodal(true)
+        setShowModal(true)
+        console.log(employees)
     }
     return(
         <main className={ styles["main"] }>
             <div className="title">
-                <h1>HRnet</h1>
+            <Typography variant="h1" gutterBottom >RHnet</Typography>
             </div>
             <div className="container">
-                <Link to="/CurrentEmployees">View Current Employees</Link>
-                <h2>Create Employee</h2>
-                <form onSubmit={handleSubmit(onSubmit)} className={styles["container"] }>
+                <Link href="/CurrentEmployees" underline="none" className={styles["link"]}>View Current Employees</Link>
+                <Typography variant="h2" gutterBottom>Create Employee</Typography>
+                <form onSubmit={handleSubmit(onSubmit)} className={styles["form"] }>
                     
                     <TextField 
                         label="First name" 
                         fullWidth
                         { ...register("firstName", {required: true})
                     }/>
-                    {errors.firstName && <p>First name is required</p>}
+                    {errors.firstName && 
+                        <Typography variant="subtitle2" gutterBottom>First name is required</Typography>}
 
                     <TextField
                         label="Last name" 
                         fullWidth
                         { ...register("lastName", {required: true})}
                     />
-                    {errors.lastName && <p>Last name is required</p>}
+                    {errors.lastName &&  
+                        <Typography variant="subtitle2" gutterBottom>Last name is required</Typography>}
 
                     <Controller
                         control={control}
                         name='dateOfBirth'
                         rules={ { required: true } }
+                        defaultValue={new Date()}
                         render={({ field }) => (
                             <DatePicker
                                 label="Date of birth"
                                 value={field.value}
-                                onChange={(newDate) => field.onChange(newDate)}
+                                onChange={ field.onChange}
                             />
                         )}
                     />
-                    {errors.dateOfBirth && <p>Select a date</p>}
+                    {errors.dateOfBirth &&  
+                        <Typography variant="subtitle2" gutterBottom>Select a date</Typography>}
 
                     <Controller
                         control={control}
                         name='startDate'
                         rules={ { required: true } }
+                        defaultValue={new Date()}
                         render={({ field }) => (
                             <DatePicker 
                                 label="Start date"
                                 value={field.value}
-                                onChange={(newDate) => field.onChange(newDate)}
+                                onChange={field.onChange}
                             />
                         )}
                     />
-                    {errors.startDate && <p>Select a date</p>}
+                    {errors.startDate &&  
+                        <Typography variant="subtitle2" gutterBottom>Select a date</Typography>}
 
                     <div className={styles["container--adress"] }>
                         <legend>Address</legend>
@@ -90,12 +99,14 @@ export function Home() {
                         <TextField 
                             label="Street" 
                             { ...register("street", {required: true})}/>
-                        {errors.street && <p>Street is required</p>}
+                        {errors.street && 
+                            <Typography variant="subtitle2" gutterBottom>Street is required</Typography>}
 
                         <TextField
                             label="City"
                             { ...register("city", {required: true})}/>
-                        {errors.city && <p>City is required</p>}
+                        {errors.city &&  
+                            <Typography variant="subtitle2" gutterBottom>City is required</Typography>}
 
                         <FormControl fullWidth>
                             <InputLabel id="stateLabel">State</InputLabel>
@@ -105,19 +116,20 @@ export function Home() {
                                 rules={ { required: true } }
                                 render={({ field }) => (
                                     <Select
-                                        id="selectTest2"
                                         label="state"
                                         labelId="stateLabel"
-                                        value={field.value}
-                                        { ...register("state", {required: true})}
-                                        >
+                                        value={field.value || "-1"}
+                                        { ...register("state", {required: true, min: 3 })}
+                                    >
+                                        <MenuItem disabled value="-1">select an option</MenuItem>
                                         {states.map((state)=> {
                                                     return <MenuItem key={state.abbreviation} value={state.name}>{ state.name }</MenuItem>
                                                 })}
                                     </Select>)}
                             />
                         </FormControl>
-                        {errors.state && <p>Select a State</p>}
+                        {errors.state &&  
+                            <Typography variant="subtitle2" gutterBottom>Select a State</Typography>}
 
                         <TextField
                             label="Zip code"
@@ -126,7 +138,8 @@ export function Home() {
                                 shrink: true,
                             }}
                             { ...register("zipCode", {required: true})}/>
-                        {errors.zipCode && <p>Zip code is required and must be a number</p>}
+                        {errors.zipCode &&  
+                            <Typography variant="subtitle2" gutterBottom>Zip code is required and must be a number</Typography>}
                     </div>
   
                     <FormControl fullWidth>
@@ -141,9 +154,10 @@ export function Home() {
                                         label="Department"
                                         labelId="departmentLabel"
                                         defaultValue=""
-                                        value={field.value}
-                                        { ...register("department", {required: true})}
-                                    >
+                                        value={field.value || "-1"}
+                                        { ...register("department", {required: true, min: 3})}
+                                    >   
+                                        <MenuItem disabled value="-1">select an option</MenuItem>
                                         <MenuItem value="Sales">Sales</MenuItem>
                                         <MenuItem value="Marketing">Marketing</MenuItem>
                                         <MenuItem value="Engineering">Engineering</MenuItem>
@@ -152,14 +166,15 @@ export function Home() {
                                     </Select>)}
                             />
                         </FormControl>
-                        {errors.department && <p>Select a State</p>}
+                        {errors.department &&  
+                            <Typography variant="subtitle2" gutterBottom>Select a State</Typography>}
 
                     <Button type="submit" variant="contained">Save</Button>
                 </form>
             </div>
 
             {showModal && 
-                <Modal setShowModal={setshowmodal}>
+                <Modal onClose={() => setShowModal(false)} isHidden={false}>
                     <h2>New Employee created !!</h2>
                     
                 </Modal>

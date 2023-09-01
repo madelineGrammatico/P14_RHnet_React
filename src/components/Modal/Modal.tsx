@@ -1,12 +1,18 @@
+import { PropsWithChildren } from 'react'
 import styles from './Modal.module.css'
 
-export function Modal({children, setShowModal} ) {
+type ModalProps = {
+    onClose: ()=> void,
+    isHidden?: boolean
+}
+export function Modal({ children, onClose, isHidden } : PropsWithChildren<ModalProps>) {
+    const className = isHidden ? "hidden" : "modal"
     return(
-        <div className={styles["modale"]}>
+        <div className={styles[className]}>
             <button 
                 className={styles["close"]}
                 onClick={() => 
-                    setShowModal(false)}
+                    onClose()}
             >X</button>
             {children}
         </div>

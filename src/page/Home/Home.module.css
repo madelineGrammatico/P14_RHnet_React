@@ -11,7 +11,21 @@
     align-items: flex-start;
     gap:1rem
 }
-
+.link {
+    color: #000;
+    text-decoration: none;
+    margin-bottom: 2rem;
+    font-size: 9rem;
+    text-align: center;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap:1rem;
+    margin: 3rem 6rem;
+}
 .container--adress {
     display: flex;
     flex-direction: column;
@@ -20,4 +34,6 @@
     background-color: rgb(230, 230, 230);
     gap:1rem;
     padding:1rem;
+    width: 100%;
+ 
 }
