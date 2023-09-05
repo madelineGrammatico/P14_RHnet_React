@@ -14,8 +14,8 @@ import { Employee, addEmployee } from "../../app/employees/employeesSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { Modal } from "../../components/Modal/Modal";
-import { Typography } from "@mui/material";
-import Link from '@mui/material/Link'
+import { Typography, Link } from "@mui/material";
+import { Link as RouterLink } from 'react-router-dom'
 
 import { useSelector } from "react-redux";
 
@@ -41,7 +41,7 @@ export function Home() {
             <Typography variant="h1" gutterBottom >RHnet</Typography>
             </div>
             <div className="container">
-                <Link href="/CurrentEmployees" underline="none" className={styles["link"]}>View Current Employees</Link>
+                <Link to="/CurrentEmployees" underline="none" component={RouterLink}>View Current Employees</Link>
                 <Typography variant="h2" gutterBottom>Create Employee</Typography>
                 <form onSubmit={handleSubmit(onSubmit)} className={styles["form"] }>
                     
@@ -174,7 +174,7 @@ export function Home() {
             </div>
 
             {showModal && 
-                <Modal onClose={() => setShowModal(false)} isHidden={false}>
+                <Modal onClose={() => setShowModal(false)} isOpen={true}>
                     <h2>New Employee created !!</h2>
                     
                 </Modal>

@@ -1,14 +1,16 @@
 import { PropsWithChildren } from 'react'
 import styles from './Modal.module.css'
+import { createPortal } from 'react-dom'
 
 type ModalProps = {
     onClose: ()=> void,
-    isHidden?: boolean
+    isOpen?: boolean
 }
-export function Modal({ children, onClose, isHidden } : PropsWithChildren<ModalProps>) {
-    const className = isHidden ? "hidden" : "modal"
-    return(
-        <div className={styles[className]}>
+export function Modal({ children, onClose, isOpen = true } : PropsWithChildren<ModalProps>) {
+    if (!isOpen) return
+
+    return createPortal(
+        <div className={styles["modal"]}>
             <button 
                 className={styles["close"]}
                 onClick={() => 
@@ -16,5 +18,5 @@ export function Modal({ children, onClose, isHidden } : PropsWithChildren<ModalP
             >X</button>
             {children}
         </div>
-    )
+    , document.body)
 }
