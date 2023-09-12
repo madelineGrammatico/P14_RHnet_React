@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
 
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef,  GridLogicOperator, GridToolbarQuickFilter  } from '@mui/x-data-grid';
 
 import styles from "./CurrentEmployees.module.css"
 import { useSelector } from "react-redux";
+import { Typography, Link } from "@mui/material";
+import { Link as RouterLink } from 'react-router-dom'
 
 export function CurrentEmployees(){
     const employees = useSelector((state) => state.employees)
@@ -58,12 +59,22 @@ export function CurrentEmployees(){
       ];
       
     return(
-        <>
-            <nav className={styles['nav']}>
-                <h1>Current Employees</h1>
-                <Link to="/Home" >Home</Link>
-            </nav>
-            <main className={styles['main']}>
+        <main className={styles['main']}>
+            <header className={styles.header}>
+                <Typography 
+                    variant="h1" 
+                    gutterBottom
+                    
+                >Current Employees</Typography>
+                <Link 
+                    to="/Home" 
+                    underline="none" 
+                    component={RouterLink} 
+                    className="styles.link"
+                >Home</Link>
+            </header>
+                
+            
                 <Box sx={{ height: 400, width: '100%' }}>
                     <DataGrid
                         autoHeight
@@ -87,10 +98,9 @@ export function CurrentEmployees(){
                         disableRowSelectionOnClick
                     />
                 </Box>
+
+                
             </main>
-        </>
-        
-        
     )
 
 }

@@ -8,7 +8,7 @@ export type Employee = {
     street: string,
     city: string,
     state: string,
-    zipCode: number,
+    zipCode: string,
     department: string,
     id?: string
 }
@@ -27,7 +27,7 @@ const initialState: Employees = {
             street: "rue",
             city: "ville",
             state: "pays",
-            zipCode: 2,
+            zipCode: "2",
             department: "departement",
             id: "0"
         },
@@ -39,7 +39,7 @@ const initialState: Employees = {
             street: "string",
             city: "string",
             state: "string",
-            zipCode: 1,
+            zipCode: "1",
             department: "string",
             id: "1"
         },
@@ -51,7 +51,7 @@ const initialState: Employees = {
             street: "string",
             city: "string",
             state: "string",
-            zipCode: 1,
+            zipCode: "1",
             department: "string",
             id: "2"
         },
@@ -63,7 +63,7 @@ const initialState: Employees = {
             street: "string",
             city: "string",
             state: "string",
-            zipCode: 1,
+            zipCode: "1",
             department: "string",
             id: "3"
         },
@@ -75,7 +75,7 @@ const initialState: Employees = {
             street: "string",
             city: "string",
             state: "string",
-            zipCode: 1,
+            zipCode: "1",
             department: "string",
             id: "4"
         },
@@ -87,7 +87,7 @@ const initialState: Employees = {
             street: "string",
             city: "string",
             state: "string",
-            zipCode: 1,
+            zipCode: "1",
             department: "string",
             id: "5"
         },
@@ -99,7 +99,7 @@ const initialState: Employees = {
             street: "string",
             city: "string",
             state: "string",
-            zipCode: 1,
+            zipCode: "1",
             department: "string",
             id: "6"
         },
@@ -111,7 +111,7 @@ const initialState: Employees = {
             street: "string",
             city: "string",
             state: "string",
-            zipCode: 1,
+            zipCode: "1",
             department: "string",
             id: "7"
         }

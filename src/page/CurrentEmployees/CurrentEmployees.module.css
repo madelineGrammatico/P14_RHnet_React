@@ -1,13 +1,16 @@
-.nav {
+.header {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    padding: 3rem 0;
+    width: fit-content;
 }
 .main{
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     padding:3rem 6rem;
 }
@@ -16,15 +19,6 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap:1rem
+    gap:1rem;
 }
 
-.container--adress {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    background-color: rgb(230, 230, 230);
-    gap:1rem;
-    padding:1rem;
-}
