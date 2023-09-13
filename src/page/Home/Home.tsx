@@ -1,4 +1,4 @@
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import { states } from "../../data/state";
 
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -8,16 +8,16 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
+import { Typography, Link } from "@mui/material";
 
 import styles from "./Home.module.css"
 import { Employee, addEmployee } from "../../app/employees/employeesSlice";
-import { useDispatch } from "react-redux";
+import { useAppDispatch} from "../../app/hooks/hooks"
 import { useState } from "react";
-import { Modal } from "../../components/Modal/Modal";
-import { Typography, Link } from "@mui/material";
+
 import { Link as RouterLink } from 'react-router-dom'
 
-// import {Modal}  from "mg-p14-modal.dedault";
+import { Modal }  from "mg-p14-modal";
 
 interface EmployeeFormData {
     firstName: string,
@@ -31,12 +31,17 @@ interface EmployeeFormData {
     department: string
 }
 export function Home() {
-    const { handleSubmit, register, control, reset, formState : {errors} } = useForm()
-    const dispatch = useDispatch()
+    const { 
+        handleSubmit, 
+        register, 
+        control, 
+        reset, 
+        formState : {errors} 
+    } = useForm<EmployeeFormData>()
+    const dispatch = useAppDispatch()
     const [ showModal, setShowModal ] = useState(true)
 
     const onSubmit = (data: EmployeeFormData) => {
-
         const dataFormated: Employee = {
             ...data,
             dateOfBirth: data.dateOfBirth.toLocaleDateString(),
@@ -110,8 +115,6 @@ export function Home() {
                 </div>
                 
                 <div className={styles["container--adress"] }>
-                    {/* <legend>Address</legend> */}
-
                     <TextField 
                         label="Street" 
                         { ...register("street", {required: true})}/>

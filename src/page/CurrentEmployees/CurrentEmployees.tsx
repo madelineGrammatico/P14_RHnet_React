@@ -3,13 +3,12 @@ import Box from '@mui/material/Box';
 import { DataGrid, GridColDef,  GridLogicOperator, GridToolbarQuickFilter  } from '@mui/x-data-grid';
 
 import styles from "./CurrentEmployees.module.css"
-import { useSelector } from "react-redux";
+import { useAppSelector} from "../../app/hooks/hooks"
 import { Typography, Link } from "@mui/material";
 import { Link as RouterLink } from 'react-router-dom'
 
 export function CurrentEmployees(){
-    const employees = useSelector((state) => state.employees)
-    console.log(employees)
+    const employees = useAppSelector((state) => state.employees)
     const columns: GridColDef[] = [
         {
             field: 'firstName',
