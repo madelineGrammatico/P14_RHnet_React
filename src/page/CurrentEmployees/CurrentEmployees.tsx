@@ -66,7 +66,7 @@ export function CurrentEmployees(){
                     
                 >Current Employees</Typography>
                 <Link 
-                    to="/Home" 
+                    to="/" 
                     underline="none" 
                     component={RouterLink} 
                     className="styles.link"

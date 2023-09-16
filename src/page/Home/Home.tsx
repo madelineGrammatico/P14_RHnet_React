@@ -39,7 +39,7 @@ export function Home() {
         formState : {errors} 
     } = useForm<EmployeeFormData>()
     const dispatch = useAppDispatch()
-    const [ showModal, setShowModal ] = useState(true)
+    const [ showModal, setShowModal ] = useState(false)
 
     const onSubmit = (data: EmployeeFormData) => {
         const dataFormated: Employee = {
